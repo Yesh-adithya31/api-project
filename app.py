@@ -39,8 +39,13 @@ def login_user():
     try:
         user = auth.get_user_by_email(email)
         # Use Firebase's built-in email/password authentication method
-        user = auth.update_user(user.uid, password=password)
-        return jsonify({"message": "User logged in successfully", "user_id": user.uid})
+        ref = db.reference('users/' + user.uid)
+        userData =ref.get()
+        # print(userData)
+        if userData["password"]== password :
+            return jsonify({"message": "User logged in successfully", "user": userData})    
+        else:
+            return jsonify({"message": "User passowrd does'nt match"})
     except Exception as e:
         return jsonify({"message": "Login failed", "error": str(e)}), 400
 
