@@ -7,13 +7,14 @@ app = Flask(__name__)
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate('serviceAccountKey.json')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://myapp-a0cd7.firebaseio.com'
+    'databaseURL': 'https://myapp-a0cd7-default-rtdb.firebaseio.com/'
 })
 
 # User Registration Endpoint
 @app.route('/register', methods=['POST'])
 def register_user():
     data = request.get_json()
+    print(data);
     email = data['email']
     password = data['password']
 
